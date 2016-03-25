@@ -38,7 +38,7 @@ titleWrapper.append("text")
 	.style("font-size", mobileScreen ? "12px" : "16px" )
 	.attr("x", (width/2 + margin.left - outerRadius - titleSeparate))
 	.attr("y", titleOffset)
-	.text("Education");
+	.text("Team");
 titleWrapper.append("line")
 	.attr("class","titleLine left")
 	.attr("x1", (width/2 + margin.left - outerRadius - titleSeparate)*0.6)
@@ -51,7 +51,7 @@ titleWrapper.append("text")
 	.style("font-size", mobileScreen ? "12px" : "16px" )
 	.attr("x", (width/2 + margin.left + outerRadius + titleSeparate))
 	.attr("y", titleOffset)
-	.text("Occupation");
+	.text("Category");
 titleWrapper.append("line")
 	.attr("class","titleLine right")
 	.attr("x1", (width/2 + margin.left - outerRadius - titleSeparate)*0.6 + 2*(outerRadius + titleSeparate))
@@ -63,41 +63,30 @@ titleWrapper.append("line")
 ////////////////////////// Data ////////////////////////////
 ////////////////////////////////////////////////////////////
 
-var Names = ["Administrative Staff","Crafts","Business Management","Basic Occupations","Health",
-			"IT","Juridical & Cultural","Management functions","Teachers",
-			"Salesmen & Service providers","Caretakers","Science & Engineering", "Other", "",
-			"Engineering","Education","Agriculture","Art, Language & Culture","Health","Behavior & Social Sciences","Economy",""];
+var Names = ["BMC","MTA Teams","MDP","Foursquare ITP", "","Category 1",
+			"Category 2","Category 3","Category 4","Category 5",
+			"Category 6",""];
 
-var respondents = 17533, //Total number of respondents (i.e. the number that make up the total group
+var metrics = 17533, //Total number of metrics (i.e. the number that make up the total group
 	emptyPerc = 0.5, //What % of the circle should become empty
-	emptyStroke = Math.round(respondents*emptyPerc); 
+	emptyStroke = Math.round(metrics*emptyPerc); 
 var matrix = [
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,232,65,44,57,39,123,1373,0], //Administratief personeel
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,0,11,0,0,24,0], //Ambachtslieden
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,173,43,52,55,36,125,2413,0], //Bedrijfsbeheer (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,16,13,23,10,37,54,0], //Elementaire beroepen
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,24,17,0,2089,85,60,0], //Gezondheidszorg (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,510,0,0,57,0,0,251,0], //IT (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,118,10,454,99,1537,271,0], //Juridisch en culturele (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,76,21,10,15,125,41,261,0], //Leidinggevende functies
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,2206,37,292,32,116,76,0], //Onderwijsgevenden
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,96,74,43,116,51,135,752,0], //Verkopers en verleners persoonlijke diensten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,34,0,22,27,156,36,0], //Verzorgend personeel
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1141,0,111,291,0,0,48,0], //Wetenschap en techniek (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,36,0,39,0,0,20,109,0], //Other
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,232,65,44,57,39,123,1373,0], //BMC
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,0,11,0,0,24,0], //MTA Teams
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,173,43,52,55,36,125,2413,0], //MDP
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,16,13,23,10,37,54,0], //Foursquare ITP
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,emptyStroke], //dummyBottom
-	[232,32,173,32,161,510,16,76,32,96,15,1141,36,0,0,0,0,0,0,0,0,0], //Techniek
-	[65,0,43,16,24,0,118,21,2206,74,34,0,0,0,0,0,0,0,0,0,0,0], //Onderwijs
-	[44,0,52,13,17,0,10,10,37,43,0,111,39,0,0,0,0,0,0,0,0,0], //Landbouw
-	[57,11,55,23,0,57,454,15,292,116,22,291,0,0,0,0,0,0,0,0,0,0], //Kunst, Taal en Cultuur
-	[39,0,36,10,2089,0,99,125,32,51,27,0,0,0,0,0,0,0,0,0,0,0], //Gezondheidszorg
-	[123,0,125,37,85,0,1537,41,116,135,156,0,20,0,0,0,0,0,0,0,0,0], //Gedrag & Maatschappij
-	[1373,24,2413,54,60,251,271,261,76,752,36,48,109,0,0,0,0,0,0,0,0,0], //Economie
+	[232,32,173,32,161,510,16,76,32,96,15,1141,36,0,0,0,0,0,0,0,0,0], //Category 1
+	[65,0,43,16,24,0,118,21,2206,74,34,0,0,0,0,0,0,0,0,0,0,0], //Category 2
+	[44,0,52,13,17,0,10,10,37,43,0,111,39,0,0,0,0,0,0,0,0,0], //Category 3
+	[57,11,55,23,0,57,454,15,292,116,22,291,0,0,0,0,0,0,0,0,0,0], //Category 4
+	[39,0,36,10,2089,0,99,125,32,51,27,0,0,0,0,0,0,0,0,0,0,0], //Category 5
+	[123,0,125,37,85,0,1537,41,116,135,156,0,20,0,0,0,0,0,0,0,0,0], //Category 6
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,emptyStroke,0,0,0,0,0,0,0,0] //dummyTop
 ];
 //Calculate how far the Chord Diagram needs to be rotated clockwise to make the dummy
 //invisible chord center vertically
-var offset = (2 * Math.PI) * (emptyStroke/(respondents + emptyStroke))/4;
+var offset = (2 * Math.PI) * (emptyStroke/(metrics + emptyStroke))/4;
 
 //Custom sort function of the chords to keep them in the original order
 var chord = customChordLayout() //d3.layout.chord()
